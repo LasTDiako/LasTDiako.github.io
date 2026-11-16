@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diako</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --panel: rgba(20, 20, 22, 0.72);
+            --panel-border: rgba(255, 255, 255, 0.06);
+            --text: #f4f4f1;
+            --muted: #9f9fa5;
+            --accent: #c4b5fd;
+            --accent-strong: #a78bfa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            line-height: 1.65;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* خطوط نرم پس‌زمینه */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -15%;
+            z-index: -2;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000' viewBox='0 0 1600 1000'%3E%3Cg fill='none' stroke='%23b99aff' stroke-opacity='.14' stroke-width='1'%3E%3Cpath d='M-180 115C30 12 150 86 305 54S570-55 735 44s280 102 438 12 278-96 607 18'/%3E%3Cpath d='M-220 270C5 122 130 205 292 258s316 24 480-83 290-123 454-18 267 128 612 36'/%3E%3Cpath d='M-200 470C15 352 145 376 288 480s288 174 460 92 276-226 450-174 302 167 602 70'/%3E%3Cpath d='M-230 690C-12 566 137 585 296 694s300 154 454 52 284-142 449-72 281 146 631 22'/%3E%3Cpath d='M-160 900C40 780 150 812 328 906s302 122 461 16 285-118 446-51 286 111 605-4'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        /* لایه تیره برای خوانایی بهتر */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(ellipse at 50% 20%, transparent 0%, rgba(10, 10, 11, 0.55) 70%, rgba(10, 10, 11, 0.85) 100%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 90px 28px 120px;
+            position: relative;
+        }
+
+        .top-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 12px;
+            letter-spacing: 1.6px;
+            color: var(--muted);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .top-label .mark {
+            width: 22px;
+            height: 22px;
+            border: 1.5px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .eyebrow {
+            font-size: 15px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+            font-weight: 400;
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(3.9rem, 9.5vw, 6.2rem);
+            font-weight: 400;
+            line-height: 1.02;
+            color: #fff;
+            margin-bottom: 42px;
+            letter-spacing: -1.5px;
+        }
+
+        .about-card {
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            padding: 30px 32px;
+            margin-bottom: 30px;
+            font-size: 1.07rem;
+            color: #d8d8dc;
+            line-height: 1.75;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        }
+
+        .about-label {
+            font-size: 11.5px;
+            color: var(--muted);
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: block;
+            font-weight: 500;
+        }
+
+        .pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .pill {
+            background: rgba(26, 26, 29, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            color: #cfc4ff;
+            padding: 9px 18px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
+        }
+
+        .pill:hover {
+            border-color: rgba(185, 154, 255, 0.25);
+            background: rgba(35, 32, 45, 0.9);
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.22s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border: 1px solid transparent;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(26, 26, 29, 0.7);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(38, 38, 42, 0.85);
+            border-color: rgba(255, 255, 255, 0.14);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 60px 20px 90px;
+            }
+            h1 {
+                font-size: 3.3rem;
+                margin-bottom: 32px;
+            }
+            .about-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-label">
+            <div class="mark">D</div>
+            <span>Cybersecurity / Research & Analysis</span>
+        </div>
+
+        <div class="eyebrow">Hi, I'm</div>
+        <h1>Diako</h1>
+
+        <div class="about-card">
+            <span class="about-label">About me</span>
+            A cybersecurity researcher, malware analyst, and programmer. My interest in this field started in late 2016, about 10 years ago when I was 9 years old.
+            <br><br>
+            I'm also interested in Minecraft. I don't have a background in writing plugins for Minecraft servers, but I have been active as a penetration tester on large servers such as TrexMine.
+        </div>
+
+        <div class="pills">
+            <div class="pill">Cybersecurity</div>
+            <div class="pill">Malware Analysis</div>
+            <div class="pill">Programming</div>
+            <div class="pill">Penetration Testing</div>
+        </div>
+
+        <div class="actions">
+            <a href="https://github.com/LasTDiako" class="btn btn-primary" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                GitHub
+            </a>
+            <a href="#work" class="btn btn-secondary">
+                Now F..Duck Off!! 🦆
+            </a>
+        </div>
+    </div>
+</body>
+</html>
